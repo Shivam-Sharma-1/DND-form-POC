@@ -11,7 +11,6 @@ const Card = ({
     e.dataTransfer.setData("id", `${id}`);
     e.dataTransfer.setData("title", `${title}`);
     handleDragging(true);
-    console.log(e.dataTransfer.getData("id"));
   };
   const handleDragEnd = () => handleDragging(false);
 

@@ -14,6 +14,7 @@ const Card = ({
   position,
 }: Props) => {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     e.preventDefault();
     handleUpdateList(
       e.dataTransfer.getData("id"),

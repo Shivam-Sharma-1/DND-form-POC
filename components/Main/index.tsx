@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   listItems: Data[];
-  handleUpdateList: (id: string, title: string) => void;
+  handleUpdateList: (id: string, title: string, position?: number) => void;
   handleDragging: (dragging: boolean) => void;
 }
 
@@ -27,8 +27,15 @@ const Main = ({ listItems, handleDragging, handleUpdateList }: Props) => {
       onDragOver={handleDragOver}
       className="w-full h-full flex flex-col gap-4 py-4 px-20"
     >
-      {listItems.map((card) => (
-        <Card key={uuidv4()} id={card.id} title={card.title} />
+      {listItems.map((card, index) => (
+        <Card
+          key={uuidv4()}
+          id={card.id}
+          title={card.title}
+          position={index}
+          handleDragging={handleDragging}
+          handleUpdateList={handleUpdateList}
+        />
       ))}
     </div>
   );

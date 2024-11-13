@@ -1,8 +1,27 @@
-import React from "react";
+const Card = ({
+  title,
+  id,
+  handleDragging,
+}: {
+  title: string;
+  id: string;
+  handleDragging: (dragging: boolean) => void;
+}) => {
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    e.dataTransfer.setData("id", `${id}`);
+    e.dataTransfer.setData("title", `${title}`);
+    handleDragging(true);
+    console.log(e.dataTransfer.getData("id"));
+  };
+  const handleDragEnd = () => handleDragging(false);
 
-const Card = ({ title }: { title: string }) => {
   return (
-    <div className="flex justify-center items-center bg-green-400 border border-green-800 rounded-md py-2">
+    <div
+      draggable
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      className="flex justify-center items-center bg-green-400 border border-green-800 rounded-md py-2"
+    >
       {title}
     </div>
   );

@@ -1,11 +1,34 @@
+import { Data } from "@/hooks/useDragDrop";
 import Card from "./Card";
+import { v4 as uuidv4 } from "uuid";
 
-const cards = [{ title: "Card 1" }, { title: "Card 2" }, { title: "Card 3" }];
-const Main = () => {
+interface Props {
+  listItems: Data[];
+  handleUpdateList: (id: string, title: string) => void;
+  handleDragging: (dragging: boolean) => void;
+}
+
+const Main = ({ listItems, handleDragging, handleUpdateList }: Props) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    handleUpdateList(
+      e.dataTransfer.getData("id"),
+      e.dataTransfer.getData("title")
+    );
+    handleDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) =>
+    e.preventDefault();
+
   return (
-    <div className="w-full flex flex-col gap-4 py-4 px-20">
-      {cards.map((card) => (
-        <Card key={card.title} title={card.title} />
+    <div
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      className="w-full h-full flex flex-col gap-4 py-4 px-20"
+    >
+      {listItems.map((card) => (
+        <Card key={uuidv4()} id={card.id} title={card.title} />
       ))}
     </div>
   );

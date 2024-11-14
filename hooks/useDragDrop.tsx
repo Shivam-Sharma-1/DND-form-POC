@@ -21,7 +21,12 @@ export const useDragAndDrop = (initialState: Data[]) => {
         { id, title },
         ...prev.slice(position),
       ]);
-    } else setListItems((prev: Data[]) => [...prev, { id, title }]);
+    } else {
+      if (listItems.find((item) => item.id === id)) {
+        setListItems((prev: Data[]) => prev.filter((item) => item.id !== id));
+      }
+      setListItems((prev: Data[]) => [...prev, { id, title }]);
+    }
   };
 
   const handleDragging = (dragging: boolean) => setIsDragging(dragging);

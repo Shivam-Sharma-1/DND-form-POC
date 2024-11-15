@@ -31,10 +31,15 @@ export const useDragAndDrop = (initialState: Data[]) => {
 
   const handleDragging = (dragging: boolean) => setIsDragging(dragging);
 
+  const handleDelete = (id: string) => {
+    setListItems((prev: Data[]) => prev.filter((item) => item.id !== id));
+  };
+
   return {
     isDragging,
     listItems,
     handleUpdateList,
     handleDragging,
+    handleDelete,
   };
 };

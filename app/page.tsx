@@ -7,7 +7,8 @@ import { Data, useDragAndDrop } from "@/hooks/useDragDrop";
 const cards: Data[] = [{ title: "Dummy", id: "wefwe" }];
 
 export default function Home() {
-  const { listItems, handleUpdateList, handleDragging } = useDragAndDrop(cards);
+  const { listItems, handleUpdateList, handleDragging, handleDelete } =
+    useDragAndDrop(cards);
 
   return (
     <main className="flex w-full min-h-screen">
@@ -17,6 +18,7 @@ export default function Home() {
           listItems={listItems}
           handleUpdateList={handleUpdateList}
           handleDragging={handleDragging}
+          handleDelete={handleDelete}
         />
       </div>
     </main>

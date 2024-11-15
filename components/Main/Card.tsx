@@ -4,6 +4,7 @@ interface Props {
   handleUpdateList: (id: string, title: string, position?: number) => void;
   handleDragging: (dragging: boolean) => void;
   position: number;
+  handleDelete: (id: string) => void;
 }
 
 const Card = ({
@@ -11,6 +12,7 @@ const Card = ({
   id,
   handleDragging,
   handleUpdateList,
+  handleDelete,
   position,
 }: Props) => {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
@@ -29,7 +31,14 @@ const Card = ({
     e.dataTransfer.setData("title", `${title}`);
     handleDragging(true);
   };
-  const handleDragEnd = () => handleDragging(false);
+
+  const handleDragEnd = () => {
+    handleDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
 
   return (
     <div
@@ -38,9 +47,16 @@ const Card = ({
       draggable
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      className="flex justify-center items-center bg-blue-400 border border-blue-800 rounded-md py-2"
+      onDragOver={handleDragOver}
+      className="flex justify-center items-center bg-blue-400 border border-blue-800 rounded-md py-2 gap-16"
     >
-      {title}
+      <p>{title}</p>
+      <button
+        onClick={() => handleDelete(id)}
+        className="bg-blue-900 py-1 px-4 rounded-md"
+      >
+        Delete
+      </button>
     </div>
   );
 };

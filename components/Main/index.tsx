@@ -6,9 +6,15 @@ interface Props {
   listItems: Data[];
   handleUpdateList: (id: string, title: string, position?: number) => void;
   handleDragging: (dragging: boolean) => void;
+  handleDelete: (id: string) => void;
 }
 
-const Main = ({ listItems, handleDragging, handleUpdateList }: Props) => {
+const Main = ({
+  listItems,
+  handleDragging,
+  handleUpdateList,
+  handleDelete,
+}: Props) => {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     handleUpdateList(
@@ -35,6 +41,7 @@ const Main = ({ listItems, handleDragging, handleUpdateList }: Props) => {
           position={index}
           handleDragging={handleDragging}
           handleUpdateList={handleUpdateList}
+          handleDelete={handleDelete}
         />
       ))}
     </div>

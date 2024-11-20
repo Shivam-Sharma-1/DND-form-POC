@@ -27,7 +27,7 @@ const CreateTempDialog = ({
 }: {
   setTemplates: Dispatch<SetStateAction<TemplateProps[]>>;
 }) => {
-  const [inputType, setInputType] = useState<InputType>(InputType.text);
+  const [inputType, setInputType] = useState<InputType>(InputType.TEXT);
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
   const [minLength, setMinLength] = useState("");
@@ -36,7 +36,7 @@ const CreateTempDialog = ({
   const handleSubmit = () => {
     setTemplates((prevTemplates) => [
       ...prevTemplates,
-      inputType === InputType.text
+      inputType === InputType.TEXT
         ? ({
             id: uuidv4(),
             name: name,
@@ -122,18 +122,18 @@ const CreateTempDialog = ({
               <p
                 className={cn(
                   "border border-border p-2 cursor-pointer rounded-md",
-                  inputType === InputType.text && "border-primary"
+                  inputType === InputType.TEXT && "border-primary"
                 )}
-                onClick={() => setInputType(InputType.text)}
+                onClick={() => setInputType(InputType.TEXT)}
               >
                 Text
               </p>
               <p
                 className={cn(
                   "border border-border p-2 cursor-pointer rounded-md",
-                  inputType === InputType.mcq && "border-primary"
+                  inputType === InputType.MCQ && "border-primary"
                 )}
-                onClick={() => setInputType(InputType.mcq)}
+                onClick={() => setInputType(InputType.MCQ)}
               >
                 MCQ
               </p>
@@ -150,7 +150,7 @@ const CreateTempDialog = ({
               onChange={(e) => setQuestion(e.target.value)}
             />
           </div>
-          {inputType === InputType.text && <TextInputs />}
+          {inputType === InputType.TEXT && <TextInputs />}
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit}>Create</Button>

@@ -1,26 +1,50 @@
+"use client";
+
 import { InputType, TemplateProps } from "@/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Label } from "../UI/shadcn/label";
 import { Input } from "../UI/shadcn/input";
+import { useState } from "react";
 
 const MainCard = ({ inputData }: { inputData: TemplateProps }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: inputData.id });
+  const [question, setQuestion] = useState(inputData.question);
+  const [minLength, setMinLength] = useState(
+    inputData.type === "text" ? inputData.minLength : "0"
+  );
+  const [maxLength, setMaxLength] = useState(
+    inputData.type === "text" ? inputData.maxLength : "0"
+  );
 
   const inputCard =
     inputData.type === InputType.TEXT ? (
-      <div className="flex flex-col justify-center gap-2">
-        <Label htmlFor="answer" className="font-medium">
-          Answer
-        </Label>
-        <Input
-          id="answer"
-          type="text"
-          placeholder="Enter the answer"
-          className="rounded-md border border-green-800 p-2"
-          maxLength={Number(inputData.maxLength)}
-        />
+      <div className="flex items-center gap-2 w-full">
+        <div className="flex flex-col justify-center gap-2 w-full flex-1">
+          <Label htmlFor="minlength" className="font-medium">
+            Min Length
+          </Label>
+          <Input
+            id="minlength"
+            type="number"
+            placeholder="Enter the Minimum length of the answer"
+            value={minLength}
+            onChange={(e) => setMinLength(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col justify-center gap-2 w-full flex-1">
+          <Label htmlFor="maxlength" className="font-medium">
+            Max Length
+          </Label>
+          <Input
+            id="maxlength"
+            type="number"
+            placeholder="Enter the Maximum length of the answer"
+            value={maxLength}
+            onChange={(e) => setMaxLength(e.target.value)}
+          />
+        </div>
       </div>
     ) : (
       ""
@@ -36,10 +60,22 @@ const MainCard = ({ inputData }: { inputData: TemplateProps }) => {
         transform: CSS.Transform.toString(transform),
         transition: transition,
       }}
-      className="flex justify-center items-center bg-blue-400 border border-blue-800 rounded-md py-2 gap-16"
+      className="flex items-center bg-white border border-border rounded-md py-4 px-6 gap-16 shadow-md"
     >
-      <div>
-        <p>{inputData.question}</p>
+      <div className="flex flex-col justify-center items-start gap-4 w-full">
+        <div className="flex flex-col justify-center gap-2 w-full">
+          <Label htmlFor="question" className="font-medium">
+            Question
+          </Label>
+          <Input
+            id="question"
+            type="text"
+            placeholder="Enter the question"
+            className="rounded-md border p-2"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+        </div>
         {inputCard}
       </div>
     </div>

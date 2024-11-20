@@ -33,12 +33,16 @@ export default function Main({
     <div
       className="w-full h-full flex flex-col gap-4 py-4 px-20"
       ref={setNodeRef}
-      style={{ color: isOver ? "green" : undefined }}
+      style={{ color: isOver ? "" : "" }}
     >
       <DndContext onDragEnd={reorderGamesList}>
         <SortableContext items={inputsList.map((input) => input.id)}>
           {inputsList.map((input) => (
-            <MainCard key={input.id} inputData={input} />
+            <MainCard
+              key={input.id}
+              inputData={input}
+              setInputsList={setInputsList}
+            />
           ))}
         </SortableContext>
       </DndContext>

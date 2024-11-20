@@ -1,6 +1,7 @@
+import { InputType, TemplateProps } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
 
-const LeftBarCard = ({ title, id }: { title: string; id: string }) => {
+const LeftBarCard = ({ template }: { template: TemplateProps }) => {
   // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
   //   e.dataTransfer.setData("id", `${id}`);
   //   e.dataTransfer.setData("title", `${title}`);
@@ -8,8 +9,17 @@ const LeftBarCard = ({ title, id }: { title: string; id: string }) => {
   // };
   // const handleDragEnd = () => handleDragging(false);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: id,
-    data: { title: title },
+    id: template.id,
+    data: {
+      id: template.id,
+      name: template.name,
+      type: template.type,
+      question: template.question,
+      ...(template.type === InputType.TEXT && {
+        minLength: template.minLength,
+        maxLength: template.maxLength,
+      }),
+    },
   });
   const style = transform
     ? {
@@ -19,14 +29,14 @@ const LeftBarCard = ({ title, id }: { title: string; id: string }) => {
 
   return (
     <div
-      id={id}
+      id={template.id}
       ref={setNodeRef}
       style={style}
       {...listeners}
       {...attributes}
       className="flex justify-center items-center bg-green-400 border border-green-800 rounded-md py-2"
     >
-      {title}
+      {template.name}
     </div>
   );
 };

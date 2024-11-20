@@ -1,46 +1,67 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import LeftBar from "@/components/LeftBar";
 import Main from "@/components/Main";
-
-interface Game {
-  id: string;
-  title: string;
-}
+import { InputType, TemplateProps } from "@/types";
 
 export default function Home() {
-  const [gamesList, setGamesList] = useState<Game[]>([]);
+  const [inputsList, setInputsList] = useState<TemplateProps[]>([
+    {
+      id: uuidv4(),
+      type: InputType.TEXT,
+      name: "Full Name",
+      question: "What is your full name?",
+      minLength: 3,
+      maxLength: 30,
+    },
+    {
+      id: uuidv4(),
+      type: InputType.TEXT,
+      name: "Email",
+      question: "What is your email?",
+      minLength: 5,
+      maxLength: 50,
+    },
+  ]);
 
-  useEffect(() => {
-    const initialGames = [
-      "Dota 2",
-      "League of Legends",
-      "CS:GO",
-      "World of Warcraft",
-      "The Witcher 3",
-    ];
-    setGamesList(initialGames.map((title) => ({ id: uuidv4(), title })));
-  }, []);
-
-  const insertGamesList = (e: DragEndEvent) => {
+  const insertInput = (e: DragEndEvent) => {
     if (!e.over) return;
-    console.log("insertGamesList", e.over);
+    console.log("insertInput", e.over);
 
-    const newItem = e.active.data.current?.title;
-    if (e.over?.id !== "droppable" || !newItem) return;
+    const newInput = e.active.data.current;
+    console.log("new inout", newInput);
+    if (e.over?.id !== "droppable" || !newInput) {
+      console.log("No new input");
+      return;
+    }
 
-    setGamesList((prevList) => [...prevList, { id: uuidv4(), title: newItem }]);
+    if (newInput && newInput.type && newInput.name && newInput.question) {
+      console.log("inside if");
+      setInputsList((prevList) => [
+        ...prevList,
+        {
+          id: uuidv4(),
+          type: newInput.type,
+          name: newInput.name,
+          question: newInput.question,
+          minLength: newInput.minLength,
+          maxLength: newInput.maxLength,
+        },
+      ]);
+    } else {
+      console.error("newInput is missing required properties", newInput);
+    }
   };
 
   return (
-    <DndContext onDragEnd={insertGamesList}>
+    <DndContext onDragEnd={insertInput}>
       <main className="flex w-full min-h-screen">
         <LeftBar />
         <div className="flex-1 bg-slate-600">
-          <Main gamesList={gamesList} setGamesList={setGamesList} />
+          <Main inputsList={inputsList} setInputsList={setInputsList} />
         </div>
       </main>
     </DndContext>

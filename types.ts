@@ -1,6 +1,6 @@
 export enum InputType {
-  "text",
-  "mcq",
+  TEXT = "text",
+  MCQ = "mcq",
 }
 
 export interface TemplatePropsBase {
@@ -11,13 +11,13 @@ export interface TemplatePropsBase {
 }
 
 export interface TextTemplateProps extends TemplatePropsBase {
-  type: InputType.text;
+  type: InputType.TEXT;
   minLength: number;
   maxLength: number;
 }
 
 export interface McqTemplateProps extends TemplatePropsBase {
-  type: InputType.mcq;
+  type: InputType.MCQ;
 }
 
 export type TemplateProps = TextTemplateProps | McqTemplateProps;

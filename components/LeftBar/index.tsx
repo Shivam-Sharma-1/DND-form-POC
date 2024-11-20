@@ -12,7 +12,7 @@ export default function LeftBar() {
     <div className="max-w-[20%] bg-slate-400 w-full flex flex-col gap-1 py-4 px-2">
       <CreateTempDialog setTemplates={setTemplates} />
       {templates.map((template) => (
-        <LeftBarCard key={template.id} id={template.id} title={template.name} />
+        <LeftBarCard key={template.id} template={template} />
       ))}
     </div>
   );

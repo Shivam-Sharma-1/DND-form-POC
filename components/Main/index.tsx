@@ -1,28 +1,25 @@
 "use client";
 
-import React from "react";
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { DndContext, DragEndEvent, useDroppable } from "@dnd-kit/core";
 import MainCard from "./MainCard";
-
-interface Game {
-  id: string;
-  title: string;
-}
+import { Dispatch, SetStateAction } from "react";
+import { TemplateProps } from "@/types";
 
 export default function Main({
-  gamesList,
-  setGamesList,
+  inputsList,
+  setInputsList,
 }: {
-  gamesList: Game[];
-  setGamesList: React.Dispatch<React.SetStateAction<Game[]>>;
+  inputsList: TemplateProps[];
+  setInputsList: Dispatch<SetStateAction<TemplateProps[]>>;
 }) {
   const { isOver, setNodeRef } = useDroppable({ id: "droppable" });
+  console.log("Main", inputsList);
 
   const reorderGamesList = (e: DragEndEvent) => {
     if (!e.over) return;
 
-    setGamesList((prevGamesList) => {
+    setInputsList((prevGamesList) => {
       const oldIndex = prevGamesList.findIndex(
         (game) => game.id === e.active.id
       );
@@ -40,9 +37,9 @@ export default function Main({
       style={{ color: isOver ? "green" : undefined }}
     >
       <DndContext onDragEnd={reorderGamesList}>
-        <SortableContext items={gamesList.map((game) => game.id)}>
-          {gamesList.map((game) => (
-            <MainCard key={game.id} id={game.id} title={game.title} />
+        <SortableContext items={inputsList.map((input) => input.id)}>
+          {inputsList.map((input) => (
+            <MainCard key={input.id} inputData={input} />
           ))}
         </SortableContext>
       </DndContext>

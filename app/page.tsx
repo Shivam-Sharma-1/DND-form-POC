@@ -60,7 +60,7 @@ export default function Home() {
     <DndContext onDragEnd={insertInput}>
       <main className="flex w-full min-h-screen">
         <LeftBar />
-        <div className="flex-1 bg-slate-600">
+        <div className="flex-1 bg-slate-200">
           <Main inputsList={inputsList} setInputsList={setInputsList} />
         </div>
       </main>

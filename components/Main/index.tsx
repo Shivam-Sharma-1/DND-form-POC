@@ -14,7 +14,6 @@ export default function Main({
   setInputsList: Dispatch<SetStateAction<TemplateProps[]>>;
 }) {
   const { isOver, setNodeRef } = useDroppable({ id: "droppable" });
-  console.log("Main", inputsList);
 
   const reorderGamesList = (e: DragEndEvent) => {
     if (!e.over) return;

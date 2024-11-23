@@ -19,27 +19,22 @@ export default function Home() {
     },
     {
       id: uuidv4(),
-      type: InputType.TEXT,
-      name: "Email",
-      question: "What is your email?",
-      minLength: 5,
-      maxLength: 50,
+      type: InputType.MCQ,
+      name: "Gender",
+      question: "What is your Gender?",
+      options: ["Male", "Female", "Other"],
     },
   ]);
 
   const insertInput = (e: DragEndEvent) => {
     if (!e.over) return;
-    console.log("insertInput", e.over);
 
     const newInput = e.active.data.current;
-    console.log("new inout", newInput);
     if (e.over?.id !== "droppable" || !newInput) {
-      console.log("No new input");
       return;
     }
 
     if (newInput && newInput.type && newInput.name && newInput.question) {
-      console.log("inside if");
       setInputsList((prevList) => [
         ...prevList,
         {
@@ -47,8 +42,12 @@ export default function Home() {
           type: newInput.type,
           name: newInput.name,
           question: newInput.question,
-          minLength: newInput.minLength,
-          maxLength: newInput.maxLength,
+          ...(newInput.type === InputType.TEXT
+            ? { minLength: newInput.minLength, maxLength: newInput.maxLength }
+            : { minLength: undefined, maxLength: undefined }),
+          ...(newInput.type === InputType.MCQ
+            ? { options: newInput.options }
+            : { options: undefined }),
         },
       ]);
     } else {

@@ -21,6 +21,7 @@ import {
   McqTemplateProps,
 } from "@/types";
 import { v4 as uuidv4 } from "uuid";
+import { PlusIcon } from "lucide-react";
 
 const CreateTempDialog = ({
   setTemplates,
@@ -32,6 +33,8 @@ const CreateTempDialog = ({
   const [question, setQuestion] = useState("");
   const [minLength, setMinLength] = useState("");
   const [maxLength, setMaxLength] = useState("");
+  const [options, setOptions] = useState<string[]>([]);
+  const [optionCount, setOptionCount] = useState(2);
 
   const handleSubmit = () => {
     setTemplates((prevTemplates) => [
@@ -90,12 +93,50 @@ const CreateTempDialog = ({
     );
   };
 
+  const MCQInputs = () => {
+    return (
+      <>
+        {Array.from({ length: optionCount }).map((_, index) => (
+          <MCQOption key={index} index={index} />
+        ))}
+        <Button
+          variant="ghost"
+          onClick={() => setOptionCount(optionCount + 1)}
+          className="w-fit flex justify-center items-center gap-2 hover:bg-transparent h-fit p-0"
+        >
+          <PlusIcon size={16} />
+          Add Option
+        </Button>
+      </>
+    );
+  };
+
+  const MCQOption = ({ index }: { index: number }) => {
+    return (
+      <div className="flex flex-col justify-center gap-2">
+        <Label htmlFor={`option-${index}`} className="font-medium">
+          Option {index + 1}
+        </Label>
+        <Input
+          id={`option-${index}`}
+          placeholder="Enter the option"
+          value={options[index]}
+          onChange={(e) => {
+            const newOptions = [...options];
+            newOptions[index] = e.target.value;
+            setOptions(newOptions);
+          }}
+        />
+      </div>
+    );
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline">Create Template</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] overflow-y-auto max-h-[90vh]">
         <DialogHeader>
           <DialogTitle>Create Template</DialogTitle>
           <DialogDescription>
@@ -150,7 +191,11 @@ const CreateTempDialog = ({
               onChange={(e) => setQuestion(e.target.value)}
             />
           </div>
-          {inputType === InputType.TEXT && <TextInputs />}
+          {inputType === InputType.TEXT ? (
+            <TextInputs />
+          ) : (
+            InputType.MCQ && <MCQInputs />
+          )}
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit}>Create</Button>

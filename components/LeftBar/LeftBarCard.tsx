@@ -2,12 +2,6 @@ import { InputType, TemplateProps } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
 
 const LeftBarCard = ({ template }: { template: TemplateProps }) => {
-  // const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-  //   e.dataTransfer.setData("id", `${id}`);
-  //   e.dataTransfer.setData("title", `${title}`);
-  //   handleDragging(true);
-  // };
-  // const handleDragEnd = () => handleDragging(false);
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: template.id,
     data: {
@@ -18,6 +12,9 @@ const LeftBarCard = ({ template }: { template: TemplateProps }) => {
       ...(template.type === InputType.TEXT && {
         minLength: template.minLength,
         maxLength: template.maxLength,
+      }),
+      ...(template.type === InputType.MCQ && {
+        options: template.options,
       }),
     },
   });

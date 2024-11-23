@@ -53,6 +53,7 @@ const CreateTempDialog = ({
             name: name,
             type: inputType,
             question: question,
+            options: options,
           } as McqTemplateProps),
     ]);
 
@@ -60,6 +61,8 @@ const CreateTempDialog = ({
     setQuestion("");
     setMinLength("");
     setMaxLength("");
+    setOptions([]);
+    setOptionCount(2);
   };
 
   const TextInputs = () => {

@@ -5,9 +5,9 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Label } from "../UI/shadcn/label";
 import { Input } from "../UI/shadcn/input";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Button } from "../UI/shadcn/button";
-import { Trash2 } from "lucide-react";
+import { Ellipsis, Trash2 } from "lucide-react";
 
 const MainCard = ({
   inputData,
@@ -26,6 +26,7 @@ const MainCard = ({
   const [maxLength, setMaxLength] = useState(
     inputData.type === "text" ? inputData.maxLength : "0"
   );
+  const dragOverlayRef = useRef<HTMLDivElement>(null);
 
   const handleDelete = () => {
     console.log("deleted");
@@ -73,14 +74,23 @@ const MainCard = ({
   return (
     <div
       ref={setNodeRef}
-      {...attributes}
-      {...listeners}
       style={{
         transform: CSS.Transform.toString(transform),
         transition,
       }}
-      className={`flex items-center bg-white border border-border rounded-md py-4 px-6 gap-16 shadow-md group cursor-move`}
+      className={`flex items-center bg-white border border-border rounded-md py-6 px-6 gap-16 shadow-md group relative`}
     >
+      <div
+        {...attributes}
+        {...listeners}
+        className="absolute inset-0 cursor-move top-0 left-0 w-full h-6 flex justify-center items-center"
+        ref={dragOverlayRef}
+      >
+        <Ellipsis
+          size={22}
+          className="text-slate-400 hidden group-hover:block"
+        />
+      </div>
       <div className="flex flex-col justify-center items-start gap-4 w-full relative z-20">
         <div className="flex flex-col justify-center gap-2 w-full">
           <div className="flex justify-between items-start w-full">
@@ -94,7 +104,7 @@ const MainCard = ({
               onFocus={handleFocus}
               onBlur={handleBlur}
             >
-              <Trash2 size={18} />
+              <Trash2 size={14} />
             </Button>
           </div>
           <Input

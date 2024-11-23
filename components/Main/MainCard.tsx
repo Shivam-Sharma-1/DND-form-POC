@@ -7,7 +7,7 @@ import { Label } from "../UI/shadcn/label";
 import { Input } from "../UI/shadcn/input";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { Button } from "../UI/shadcn/button";
-import { Ellipsis, Trash2 } from "lucide-react";
+import { Ellipsis, PlusIcon, Trash2 } from "lucide-react";
 import { cn } from "@/utils/helpers/styles";
 
 const MainCard = ({
@@ -30,9 +30,9 @@ const MainCard = ({
   const [options, setOptions] = useState(
     inputData.type === InputType.MCQ ? inputData.options : []
   );
-  // const [optionCount, setOptionCount] = useState(
-  //   inputData.type === InputType.MCQ ? inputData.options.length : 0
-  // );
+  const [optionCount, setOptionCount] = useState(
+    inputData.type === InputType.MCQ ? inputData.options.length : 0
+  );
   const dragOverlayRef = useRef<HTMLDivElement>(null);
 
   const handleDelete = () => {
@@ -81,7 +81,7 @@ const MainCard = ({
 
   const MCQInputs = () => {
     return (
-      <div className="flex items-center gap-2 w-full">
+      <div className="flex flex-col justify-center gap-2 w-full">
         <div className="flex flex-col justify-center gap-2 w-full">
           {options.map((option, index) => (
             <div key={index} className="flex items-center gap-4 w-full">
@@ -109,7 +109,42 @@ const MainCard = ({
               />
             </div>
           ))}
+          {options.length < optionCount &&
+            Array.from({ length: optionCount - options.length }).map(
+              (_, index) => (
+                <div key={index} className="flex items-center gap-4 w-full">
+                  <Label
+                    htmlFor={`option-${options.length + index}-${inputData.id}`}
+                    className="font-medium shrink-0 min-w-16"
+                  >
+                    Option {options.length + index + 1}
+                  </Label>
+                  <Input
+                    id={`option-${options.length + index}-${inputData.id}`}
+                    type="text"
+                    placeholder="Enter the option"
+                    className="flex-1"
+                    onChange={(e) =>
+                      setOptions((prevOptions) => [
+                        ...prevOptions,
+                        e.target.value,
+                      ])
+                    }
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                  />
+                </div>
+              )
+            )}
         </div>
+        <Button
+          variant="ghost"
+          onClick={() => setOptionCount(optionCount + 1)}
+          className="w-fit flex justify-center items-center gap-2 hover:bg-transparent h-fit p-0 mt-1"
+        >
+          <PlusIcon size={16} />
+          Add Option
+        </Button>
       </div>
     );
   };

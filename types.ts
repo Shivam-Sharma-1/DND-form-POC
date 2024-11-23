@@ -18,6 +18,7 @@ export interface TextTemplateProps extends TemplatePropsBase {
 
 export interface McqTemplateProps extends TemplatePropsBase {
   type: InputType.MCQ;
+  options: string[];
 }
 
 export type TemplateProps = TextTemplateProps | McqTemplateProps;

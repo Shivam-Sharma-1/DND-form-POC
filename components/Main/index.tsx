@@ -17,17 +17,17 @@ export default function Main({
 }) {
   const { isOver, setNodeRef } = useDroppable({ id: "droppable" });
 
-  const reorderGamesList = (e: DragEndEvent) => {
+  const reorderInputsList = (e: DragEndEvent) => {
     if (!e.over) return;
 
-    setInputsList((prevGamesList) => {
-      const oldIndex = prevGamesList.findIndex(
-        (game) => game.id === e.active.id
+    setInputsList((prevInputsList) => {
+      const oldIndex = prevInputsList.findIndex(
+        (input) => input.id === e.active.id
       );
-      const newIndex = prevGamesList.findIndex(
-        (game) => game.id === e.over!.id
+      const newIndex = prevInputsList.findIndex(
+        (input) => input.id === e.over!.id
       );
-      return arrayMove(prevGamesList, oldIndex, newIndex);
+      return arrayMove(prevInputsList, oldIndex, newIndex);
     });
   };
 
@@ -37,7 +37,7 @@ export default function Main({
       ref={setNodeRef}
       style={{ color: isOver ? "" : "" }}
     >
-      <DndContext onDragEnd={reorderGamesList}>
+      <DndContext onDragEnd={reorderInputsList}>
         <SortableContext
           items={inputsList.map((input) => input.id)}
           strategy={verticalListSortingStrategy}

@@ -43,8 +43,10 @@ const LeftBarCard = ({
         index != 0 && "border-t border-gray-400"
       )}
     >
-      <p>{template.name}</p>
-      <p className="text-xs font-medium text-gray-300">{template.question}</p>
+      <p className="pointer-events-none">{template.name}</p>
+      <p className="text-xs font-medium text-gray-300 pointer-events-none">
+        {template.question}
+      </p>
     </div>
   );
 };

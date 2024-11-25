@@ -1,7 +1,6 @@
 "use client";
 
 import { Dispatch, SetStateAction, useState } from "react";
-import { Button } from "../UI/shadcn/button";
 import {
   Dialog,
   DialogContent,
@@ -10,9 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../UI/shadcn/dialog";
-import { Input } from "../UI/shadcn/input";
-import { Label } from "../UI/shadcn/label";
+} from "@/components/UI/shadcn/dialog";
+import { Input } from "@/components/UI/shadcn/input";
+import { Label } from "@/components/UI/shadcn/label";
 import { cn } from "@/utils/helpers/styles";
 import {
   InputType,
@@ -21,7 +20,9 @@ import {
   McqTemplateProps,
 } from "@/types";
 import { v4 as uuidv4 } from "uuid";
-import { PlusIcon } from "lucide-react";
+import { Button } from "@/components/UI/shadcn/button";
+import TextInputs from "./TextInputs";
+import MCQInputs from "./MCQInputs";
 
 const CreateTempDialog = ({
   setTemplates,
@@ -31,8 +32,8 @@ const CreateTempDialog = ({
   const [inputType, setInputType] = useState<InputType>(InputType.TEXT);
   const [name, setName] = useState("");
   const [question, setQuestion] = useState("");
-  const [minLength, setMinLength] = useState("");
-  const [maxLength, setMaxLength] = useState("");
+  const [minLength, setMinLength] = useState<number | undefined>(undefined);
+  const [maxLength, setMaxLength] = useState<number | undefined>(undefined);
   const [options, setOptions] = useState<string[]>([]);
   const [optionCount, setOptionCount] = useState(2);
 
@@ -59,80 +60,29 @@ const CreateTempDialog = ({
 
     setName("");
     setQuestion("");
-    setMinLength("");
-    setMaxLength("");
+    setMinLength(undefined);
+    setMaxLength(undefined);
     setOptions([]);
     setOptionCount(2);
+    setInputType(InputType.TEXT);
   };
 
-  const TextInputs = () => {
-    return (
-      <>
-        <div className="flex flex-col justify-center gap-2">
-          <Label htmlFor="minlength" className="font-medium">
-            Min Length
-          </Label>
-          <Input
-            id="minlength"
-            type="number"
-            placeholder="Enter the Minimum length of the answer"
-            value={minLength}
-            onChange={(e) => setMinLength(e.target.value)}
-          />
-        </div>
-        <div className="flex flex-col justify-center gap-2">
-          <Label htmlFor="maxlength" className="font-medium">
-            Max Length
-          </Label>
-          <Input
-            id="maxlength"
-            type="number"
-            placeholder="Enter the Maximum length of the answer"
-            value={maxLength}
-            onChange={(e) => setMaxLength(e.target.value)}
-          />
-        </div>
-      </>
-    );
-  };
-
-  const MCQInputs = () => {
-    return (
-      <>
-        {Array.from({ length: optionCount }).map((_, index) => (
-          <MCQOption key={index} index={index} />
-        ))}
-        <Button
-          variant="ghost"
-          onClick={() => setOptionCount(optionCount + 1)}
-          className="w-fit flex justify-center items-center gap-2 hover:bg-transparent h-fit p-0"
-        >
-          <PlusIcon size={16} />
-          Add Option
-        </Button>
-      </>
-    );
-  };
-
-  const MCQOption = ({ index }: { index: number }) => {
-    return (
-      <div className="flex flex-col justify-center gap-2">
-        <Label htmlFor={`option-${index}`} className="font-medium">
-          Option {index + 1}
-        </Label>
-        <Input
-          id={`option-${index}`}
-          placeholder="Enter the option"
-          value={options[index]}
-          onChange={(e) => {
-            const newOptions = [...options];
-            newOptions[index] = e.target.value;
-            setOptions(newOptions);
-          }}
-        />
-      </div>
-    );
-  };
+  const inputCards =
+    inputType === InputType.TEXT ? (
+      <TextInputs
+        minLength={minLength}
+        setMinLength={setMinLength}
+        maxLength={maxLength}
+        setMaxLength={setMaxLength}
+      />
+    ) : inputType === InputType.MCQ ? (
+      <MCQInputs
+        options={options}
+        setOptions={setOptions}
+        optionCount={optionCount}
+        setOptionCount={setOptionCount}
+      />
+    ) : null;
 
   return (
     <Dialog>
@@ -196,11 +146,7 @@ const CreateTempDialog = ({
               onChange={(e) => setQuestion(e.target.value)}
             />
           </div>
-          {inputType === InputType.TEXT ? (
-            <TextInputs />
-          ) : (
-            InputType.MCQ && <MCQInputs />
-          )}
+          {inputCards}
         </div>
         <DialogFooter>
           <Button onClick={handleSubmit}>Create</Button>

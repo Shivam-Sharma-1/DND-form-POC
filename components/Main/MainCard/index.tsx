@@ -70,7 +70,7 @@ const MainCard = ({
         transition,
       }}
       className={cn(
-        `flex items-center bg-white border border-border rounded-md py-6 px-6 gap-16 shadow-md group relative z-0 max-w-[800px] w-[800px]`,
+        `flex items-center bg-white border border-border rounded-md py-6 px-6 gap-16 shadow-md group relative z-0 max-w-[800px] w-full`,
         isDragging && "z-20"
       )}
     >

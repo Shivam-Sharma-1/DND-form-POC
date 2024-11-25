@@ -1,6 +1,8 @@
-"use client";
-
-import { arrayMove, SortableContext } from "@dnd-kit/sortable";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 import { DndContext, DragEndEvent, useDroppable } from "@dnd-kit/core";
 import { Dispatch, SetStateAction } from "react";
 import { TemplateProps } from "@/types";
@@ -31,12 +33,15 @@ export default function Main({
 
   return (
     <div
-      className="w-full h-full flex flex-col gap-4 py-4 px-20"
+      className="w-full h-full flex flex-col gap-4 py-4 px-20 items-center"
       ref={setNodeRef}
       style={{ color: isOver ? "" : "" }}
     >
       <DndContext onDragEnd={reorderGamesList}>
-        <SortableContext items={inputsList.map((input) => input.id)}>
+        <SortableContext
+          items={inputsList.map((input) => input.id)}
+          strategy={verticalListSortingStrategy}
+        >
           {inputsList.map((input) => (
             <MainCard
               key={input.id}

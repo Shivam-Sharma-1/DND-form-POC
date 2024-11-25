@@ -2,9 +2,9 @@
 
 import { arrayMove, SortableContext } from "@dnd-kit/sortable";
 import { DndContext, DragEndEvent, useDroppable } from "@dnd-kit/core";
-import MainCard from "./MainCard";
 import { Dispatch, SetStateAction } from "react";
 import { TemplateProps } from "@/types";
+import MainCard from "./MainCard";
 
 export default function Main({
   inputsList,

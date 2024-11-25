@@ -137,7 +137,9 @@ const CreateTempDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Create Template</Button>
+        <Button className="font-medium text-md py-6 mx-4">
+          Create Template
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] overflow-y-auto max-h-[90vh]">
         <DialogHeader>

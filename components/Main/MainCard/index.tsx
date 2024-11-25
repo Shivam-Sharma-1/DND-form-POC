@@ -66,11 +66,11 @@ const MainCard = ({
     <div
       ref={setNodeRef}
       style={{
-        transform: CSS.Transform.toString(transform),
+        transform: CSS.Translate.toString(transform),
         transition,
       }}
       className={cn(
-        `flex items-center bg-white border border-border rounded-md py-6 px-6 gap-16 shadow-md group relative z-0`,
+        `flex items-center bg-white border border-border rounded-md py-6 px-6 gap-16 shadow-md group relative z-0 max-w-[800px] w-[800px]`,
         isDragging && "z-20"
       )}
     >

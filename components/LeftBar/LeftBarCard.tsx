@@ -1,7 +1,14 @@
 import { InputType, TemplateProps } from "@/types";
+import { cn } from "@/utils/helpers/styles";
 import { useDraggable } from "@dnd-kit/core";
 
-const LeftBarCard = ({ template }: { template: TemplateProps }) => {
+const LeftBarCard = ({
+  template,
+  index,
+}: {
+  template: TemplateProps;
+  index: number;
+}) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: template.id,
     data: {
@@ -31,9 +38,13 @@ const LeftBarCard = ({ template }: { template: TemplateProps }) => {
       style={style}
       {...listeners}
       {...attributes}
-      className="flex justify-center items-center bg-green-400 border border-green-800 rounded-md py-2 z-30"
+      className={cn(
+        "w-full flex flex-col justify-center bg-slate-500 text-white py-2 px-3 z-30",
+        index != 0 && "border-t border-gray-400"
+      )}
     >
-      {template.name}
+      <p>{template.name}</p>
+      <p className="text-xs font-medium text-gray-300">{template.question}</p>
     </div>
   );
 };

@@ -17,9 +17,14 @@ const MainCard = ({
   inputData: TemplateProps;
   setInputsList: Dispatch<SetStateAction<TemplateProps[]>>;
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: inputData.id, disabled: isDragging });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: inputData.id });
   const [question, setQuestion] = useState(inputData.question);
   const [minLength, setMinLength] = useState(
     inputData.type === InputType.TEXT ? inputData.minLength : "0"
@@ -41,9 +46,6 @@ const MainCard = ({
     );
   };
 
-  const handleFocus = () => setIsDragging(true);
-  const handleBlur = () => setIsDragging(false);
-
   const TextInputs = () => {
     return (
       <div className="flex items-center gap-2 w-full">
@@ -57,8 +59,6 @@ const MainCard = ({
             placeholder="Enter the Minimum length of the answer"
             value={minLength}
             onChange={(e) => setMinLength(e.target.value)}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
           />
         </div>
         <div className="flex flex-col justify-center gap-2 w-full flex-1">
@@ -71,8 +71,6 @@ const MainCard = ({
             placeholder="Enter the Maximum length of the answer"
             value={maxLength}
             onChange={(e) => setMaxLength(e.target.value)}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
           />
         </div>
       </div>
@@ -104,8 +102,6 @@ const MainCard = ({
                     )
                   )
                 }
-                onFocus={handleFocus}
-                onBlur={handleBlur}
               />
             </div>
           ))}
@@ -130,8 +126,6 @@ const MainCard = ({
                         e.target.value,
                       ])
                     }
-                    onFocus={handleFocus}
-                    onBlur={handleBlur}
                   />
                 </div>
               )
@@ -189,8 +183,6 @@ const MainCard = ({
               variant="ghost"
               className="p-0 h-fit text-destructive bg-transparent shadow-none hidden group-hover:block hover:bg-red-200 hover:text-destructive"
               onClick={handleDelete}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
             >
               <Trash2 size={14} />
             </Button>
@@ -202,8 +194,6 @@ const MainCard = ({
             className="rounded-md border p-2"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
           />
         </div>
         {inputCard}

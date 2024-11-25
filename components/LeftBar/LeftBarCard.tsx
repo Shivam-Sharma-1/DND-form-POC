@@ -31,7 +31,7 @@ const LeftBarCard = ({ template }: { template: TemplateProps }) => {
       style={style}
       {...listeners}
       {...attributes}
-      className="flex justify-center items-center bg-green-400 border border-green-800 rounded-md py-2"
+      className="flex justify-center items-center bg-green-400 border border-green-800 rounded-md py-2 z-30"
     >
       {template.name}
     </div>

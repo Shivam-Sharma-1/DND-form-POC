@@ -164,7 +164,7 @@ const MainCard = ({
         transition,
       }}
       className={cn(
-        `flex items-center bg-white border border-border rounded-md py-6 px-6 gap-16 shadow-md group relative`,
+        `flex items-center bg-white border border-border rounded-md py-6 px-6 gap-16 shadow-md group relative z-0`,
         isDragging && "z-20"
       )}
     >

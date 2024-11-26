@@ -12,6 +12,7 @@ import LeftBar from "@/components/LeftBar";
 import Main from "@/components/Main";
 import { InputType, TemplateProps } from "@/types";
 import { arrayMove } from "@dnd-kit/sortable";
+import { Button } from "@/components/UI/shadcn/button";
 
 export default function Home() {
   const [inputsList, setInputsList] = useState<TemplateProps[]>([
@@ -116,15 +117,17 @@ export default function Home() {
   };
 
   return (
-    <DndContext
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      // onDragOver={(e) => console.log("dragover", e)}
-    >
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
       <main className="flex w-full min-h-screen">
         <LeftBar activeElement={activeElement} />
-        <div className="flex-1 bg-slate-200">
+        <div className="flex-1 bg-slate-200 relative">
           <Main inputsList={inputsList} setInputsList={setInputsList} />
+          <Button
+            className="absolute bottom-4 right-4"
+            onClick={() => console.log(inputsList)}
+          >
+            Submit
+          </Button>
         </div>
       </main>
     </DndContext>

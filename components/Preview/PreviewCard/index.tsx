@@ -5,9 +5,12 @@ import React from "react";
 
 const PreviewCard = ({ inputData }: { inputData: TemplateProps }) => {
   return (
-    <div className="flex flex-col justify-center items-start gap-2">
-      <div className="flex flex-col justify-center gap-2 w-full">
-        <Label htmlFor={`question-${inputData.id}`} className="font-medium">
+    <div className="flex flex-col justify-center items-start">
+      <div className="flex flex-col justify-center gap-3 w-full">
+        <Label
+          htmlFor={`question-${inputData.id}`}
+          className="font-medium text-md"
+        >
           {inputData.question}
         </Label>
         {inputData.type === "text" ? (

@@ -4,8 +4,13 @@ import { useState } from "react";
 import LeftBarCard from "./LeftBarCard";
 import CreateTempDialog from "./CreateTempDialog";
 import { InputType, TemplateProps } from "@/types";
+import { Active, DragOverlay } from "@dnd-kit/core";
 
-export default function LeftBar() {
+export default function LeftBar({
+  activeElement,
+}: {
+  activeElement: Active | null;
+}) {
   const [templates, setTemplates] = useState<TemplateProps[]>([
     {
       id: "1",
@@ -23,6 +28,7 @@ export default function LeftBar() {
       options: ["Red", "Green", "Blue"],
     },
   ]);
+  console.log("Leftbar", activeElement);
 
   return (
     <div className="max-w-[20%] bg-slate-600 w-full flex flex-col justify-between py-4 sticky top-0 left-0 h-screen max-h-screen">
@@ -37,6 +43,15 @@ export default function LeftBar() {
         </div>
       </div>
       <CreateTempDialog setTemplates={setTemplates} />
+      <DragOverlay>
+        {activeElement ? (
+          <LeftBarCard
+            key={activeElement.id}
+            template={activeElement.data.current as TemplateProps}
+            index={1}
+          />
+        ) : null}
+      </DragOverlay>
     </div>
   );
 }

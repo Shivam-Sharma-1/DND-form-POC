@@ -1,22 +1,14 @@
 import { Input } from "@/components/UI/shadcn/input";
 import { Label } from "@/components/UI/shadcn/label";
+import { TemplateProps, TextTemplateProps } from "@/types";
 import { Dispatch, SetStateAction } from "react";
 
 interface TextInputsProps {
-  minLength: number;
-  setMinLength: Dispatch<SetStateAction<number>>;
-  inputData: { id: string };
-  maxLength: number;
-  setMaxLength: Dispatch<SetStateAction<number>>;
+  inputData: TextTemplateProps;
+  setInputsList: Dispatch<SetStateAction<TemplateProps[]>>;
 }
 
-const TextInputs = ({
-  minLength,
-  setMinLength,
-  inputData,
-  maxLength,
-  setMaxLength,
-}: TextInputsProps) => {
+const TextInputs = ({ inputData, setInputsList }: TextInputsProps) => {
   return (
     <div className="flex items-center gap-2 w-full">
       <div className="flex flex-col justify-center gap-2 w-full flex-1">
@@ -27,8 +19,21 @@ const TextInputs = ({
           id={`minlength-${inputData.id}`}
           type="number"
           placeholder="Enter the Minimum length of the answer"
-          value={minLength}
-          onChange={(e) => setMinLength(Number(e.target.value))}
+          value={inputData.minLength}
+          onChange={(e) =>
+            setInputsList((prevList) => {
+              const updatedList = prevList.map((input) => {
+                if (input.id === inputData.id) {
+                  return {
+                    ...input,
+                    minLength: Number(e.target.value),
+                  };
+                }
+                return input;
+              });
+              return updatedList;
+            })
+          }
         />
       </div>
       <div className="flex flex-col justify-center gap-2 w-full flex-1">
@@ -39,8 +44,21 @@ const TextInputs = ({
           id={`maxlength-${inputData.id}`}
           type="number"
           placeholder="Enter the Maximum length of the answer"
-          value={maxLength}
-          onChange={(e) => setMaxLength(Number(e.target.value))}
+          value={inputData.maxLength}
+          onChange={(e) =>
+            setInputsList((prevList) => {
+              const updatedList = prevList.map((input) => {
+                if (input.id === inputData.id) {
+                  return {
+                    ...input,
+                    maxLength: Number(e.target.value),
+                  };
+                }
+                return input;
+              });
+              return updatedList;
+            })
+          }
         />
       </div>
     </div>

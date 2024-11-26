@@ -1,29 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import LeftBarCard from "./LeftBarCard";
 import CreateTempDialog from "./CreateTempDialog";
-import { InputType, TemplateProps } from "@/types";
+import { TemplateProps } from "@/types";
+import CustomDragOverlay from "./CustomDragOverlay";
 
-export default function LeftBar() {
-  const [templates, setTemplates] = useState<TemplateProps[]>([
-    {
-      id: "1",
-      name: "Text",
-      type: InputType.TEXT,
-      question: "Enter your email",
-      minLength: 5,
-      maxLength: 10,
-    },
-    {
-      id: "2",
-      name: "MCQ",
-      type: InputType.MCQ,
-      question: "Select your favourite color",
-      options: ["Red", "Green", "Blue"],
-    },
-  ]);
-
+export default function LeftBar({
+  activeTemplate,
+  templates,
+  setTemplates,
+}: {
+  activeTemplate: TemplateProps | null;
+  templates: TemplateProps[];
+  setTemplates: Dispatch<SetStateAction<TemplateProps[]>>;
+}) {
   return (
     <div className="max-w-[20%] bg-slate-600 w-full flex flex-col justify-between py-4 sticky top-0 left-0 h-screen max-h-screen z-30">
       <div className="flex flex-col justify-center gap-4">
@@ -35,6 +26,7 @@ export default function LeftBar() {
             <LeftBarCard key={template.id} template={template} index={index} />
           ))}
         </div>
+        <CustomDragOverlay template={activeTemplate} />
       </div>
       <CreateTempDialog setTemplates={setTemplates} />
     </div>

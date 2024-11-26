@@ -27,13 +27,6 @@ const MainCard = ({
     transition,
     isDragging,
   } = useSortable({ id: inputData.id });
-  const [question, setQuestion] = useState(inputData.question);
-  const [minLength, setMinLength] = useState<number>(
-    inputData.type === InputType.TEXT ? inputData.minLength : 0
-  );
-  const [maxLength, setMaxLength] = useState<number>(
-    inputData.type === InputType.TEXT ? inputData.maxLength : 0
-  );
   const [options, setOptions] = useState(
     inputData.type === InputType.MCQ ? inputData.options : []
   );
@@ -47,18 +40,13 @@ const MainCard = ({
 
   const inputCard =
     inputData.type === InputType.TEXT ? (
-      <TextInputs
-        minLength={minLength}
-        setMinLength={setMinLength}
-        inputData={inputData}
-        maxLength={maxLength}
-        setMaxLength={setMaxLength}
-      />
+      <TextInputs inputData={inputData} setInputsList={setInputsList} />
     ) : inputData.type === InputType.MCQ ? (
       <MCQInputs
         inputData={inputData}
         options={options}
         setOptions={setOptions}
+        setInputsList={setInputsList}
       />
     ) : null;
 
@@ -104,8 +92,21 @@ const MainCard = ({
             type="text"
             placeholder="Enter the question"
             className="rounded-md border p-2"
-            value={question}
-            onChange={(e) => setQuestion(e.target.value)}
+            value={inputData.question}
+            onChange={(e) =>
+              setInputsList((prevList) => {
+                const updatedList = prevList.map((input) => {
+                  if (input.id === inputData.id) {
+                    return {
+                      ...input,
+                      question: e.target.value,
+                    };
+                  }
+                  return input;
+                });
+                return updatedList;
+              })
+            }
           />
         </div>
         {inputCard}

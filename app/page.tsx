@@ -119,17 +119,22 @@ export default function Home() {
             <Main inputsList={inputsList} setInputsList={setInputsList} />
           )}
 
-          {!isPreview && (
+          <div className="fixed bottom-4 right-4 flex flex-col justify-center gap-4">
+            {!isPreview && (
+              <Button
+                className="font-medium text-md py-6 mx-4"
+                onClick={() => console.log(inputsList)}
+              >
+                Create Form
+              </Button>
+            )}
             <Button
-              className="absolute bottom-4 right-4"
-              onClick={() => {
-                console.log(inputsList);
-                setIsPreview((prev) => !prev);
-              }}
+              className="font-medium text-md py-6 mx-4"
+              onClick={() => setIsPreview((prev) => !prev)}
             >
-              Submit
+              Toggle Preview
             </Button>
-          )}
+          </div>
         </div>
       </main>
     </DndContext>

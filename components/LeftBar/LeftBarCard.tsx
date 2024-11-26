@@ -9,7 +9,7 @@ const LeftBarCard = ({
   template: TemplateProps;
   index: number;
 }) => {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  const { attributes, listeners, setNodeRef } = useDraggable({
     id: template.id,
     data: {
       id: template.id,
@@ -25,17 +25,11 @@ const LeftBarCard = ({
       }),
     },
   });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
 
   return (
     <div
       id={template.id}
       ref={setNodeRef}
-      style={style}
       {...listeners}
       {...attributes}
       className={cn(

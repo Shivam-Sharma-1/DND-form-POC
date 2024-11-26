@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragStartEvent } from "@dnd-kit/core";
 import LeftBar from "@/components/LeftBar";
 import Main from "@/components/Main";
 import { InputType, TemplateProps } from "@/types";
@@ -29,8 +29,38 @@ export default function Home() {
     },
   ]);
   const [isPreview, setIsPreview] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState<TemplateProps | null>(
+    null
+  );
+  const [templates, setTemplates] = useState<TemplateProps[]>([
+    {
+      id: "1",
+      name: "Text",
+      type: InputType.TEXT,
+      question: "Enter your email",
+      minLength: 5,
+      maxLength: 10,
+    },
+    {
+      id: "2",
+      name: "MCQ",
+      type: InputType.MCQ,
+      question: "Select your favourite color",
+      options: ["Red", "Green", "Blue"],
+    },
+  ]);
+
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event;
+    const draggedTemplate = templates.find((t) => t.id === active.id);
+    if (draggedTemplate) {
+      setActiveTemplate(draggedTemplate);
+    }
+  };
 
   const handleDragEnd = (e: DragEndEvent) => {
+    setActiveTemplate(null);
+
     const { over, active } = e;
     if (!over) return;
 
@@ -109,9 +139,15 @@ export default function Home() {
   };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
       <main className="flex w-full min-h-screen">
-        {!isPreview && <LeftBar />}
+        {!isPreview && (
+          <LeftBar
+            activeTemplate={activeTemplate}
+            templates={templates}
+            setTemplates={setTemplates}
+          />
+        )}
         <div className="flex-1 bg-slate-200 relative">
           {isPreview ? (
             <Preview inputsList={inputsList} />

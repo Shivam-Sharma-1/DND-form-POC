@@ -28,7 +28,6 @@ export default function LeftBar({
       options: ["Red", "Green", "Blue"],
     },
   ]);
-  console.log("Leftbar", activeElement);
 
   return (
     <div className="max-w-[20%] bg-slate-600 w-full flex flex-col justify-between py-4 sticky top-0 left-0 h-screen max-h-screen">

@@ -17,33 +17,17 @@ export default function Main({
 }) {
   const { isOver, setNodeRef } = useDroppable({ id: "droppable" });
 
-  // const reorderInputsList = (e: DragEndEvent) => {
-  //   if (!e.over) return;
-
-  //   setInputsList((prevInputsList) => {
-  //     const oldIndex = prevInputsList.findIndex(
-  //       (input) => input.id === e.active.id
-  //     );
-  //     const newIndex = prevInputsList.findIndex(
-  //       (input) => input.id === e.over!.id
-  //     );
-  //     return arrayMove(prevInputsList, oldIndex, newIndex);
-  //   });
-  // };
-
   return (
-    <div
-      className={cn(
-        "w-full h-full flex flex-col gap-4 py-4 px-20 items-center",
-        isOver ? "" : ""
-      )}
-      ref={setNodeRef}
-      // style={{ color: isOver ? "border border-2 border-blue-400" : "" }}
+    <SortableContext
+      items={inputsList.map((input) => input.id)}
+      strategy={verticalListSortingStrategy}
     >
-      {/* <DndContext onDragEnd={reorderInputsList}> */}
-      <SortableContext
-        items={inputsList.map((input) => input.id)}
-        strategy={verticalListSortingStrategy}
+      <div
+        className={cn(
+          "w-full h-full flex flex-col gap-4 py-4 px-20 items-center",
+          isOver ? "" : ""
+        )}
+        ref={setNodeRef}
       >
         {inputsList.map((input) => (
           <MainCard
@@ -52,8 +36,7 @@ export default function Main({
             setInputsList={setInputsList}
           />
         ))}
-      </SortableContext>
-      {/* </DndContext> */}
-    </div>
+      </div>
+    </SortableContext>
   );
 }

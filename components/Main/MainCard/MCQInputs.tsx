@@ -3,17 +3,23 @@
 import { Button } from "@/components/UI/shadcn/button";
 import { Input } from "@/components/UI/shadcn/input";
 import { Label } from "@/components/UI/shadcn/label";
-import { InputType } from "@/types";
+import { InputType, TemplateProps } from "@/types";
 import { PlusIcon } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface MCQInputsProps {
-  inputData: { id: string; type: InputType; options: string[] };
+  inputData: TemplateProps;
   options: string[];
   setOptions: Dispatch<SetStateAction<string[]>>;
+  setInputsList: Dispatch<SetStateAction<TemplateProps[]>>;
 }
 
-const MCQInputs = ({ inputData, options, setOptions }: MCQInputsProps) => {
+const MCQInputs = ({
+  inputData,
+  options,
+  setOptions,
+  setInputsList,
+}: MCQInputsProps) => {
   const [optionCount, setOptionCount] = useState(
     inputData.type === InputType.MCQ ? inputData.options.length : 0
   );
@@ -21,8 +27,30 @@ const MCQInputs = ({ inputData, options, setOptions }: MCQInputsProps) => {
   const handleOptionChange = (index: number, value: string) => {
     setOptions((prevOptions) => {
       const newOptions = [...prevOptions];
-      newOptions[index] = value;
+      if (index >= newOptions.length) {
+        newOptions.push(value);
+      } else {
+        newOptions[index] = value;
+      }
       return newOptions;
+    });
+
+    setInputsList((prevList) => {
+      return prevList.map((input) => {
+        if (input.id === inputData.id) {
+          const updatedOptions = [...options];
+          if (index >= updatedOptions.length) {
+            updatedOptions.push(value);
+          } else {
+            updatedOptions[index] = value;
+          }
+          return {
+            ...input,
+            options: updatedOptions,
+          };
+        }
+        return input;
+      });
     });
   };
 

@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import {
-  Active,
-  DndContext,
-  DragEndEvent,
-  DragStartEvent,
-} from "@dnd-kit/core";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import LeftBar from "@/components/LeftBar";
 import Main from "@/components/Main";
 import { InputType, TemplateProps } from "@/types";
@@ -33,7 +28,6 @@ export default function Home() {
       options: ["Male", "Female", "Other"],
     },
   ]);
-  const [activeElement, setActiveElement] = useState<Active | null>(null);
   const [isPreview, setIsPreview] = useState(false);
 
   const handleDragEnd = (e: DragEndEvent) => {
@@ -114,14 +108,10 @@ export default function Home() {
     }
   };
 
-  const handleDragStart = (e: DragStartEvent) => {
-    setActiveElement(e.active);
-  };
-
   return (
-    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+    <DndContext onDragEnd={handleDragEnd}>
       <main className="flex w-full min-h-screen">
-        {!isPreview && <LeftBar activeElement={activeElement} />}
+        {!isPreview && <LeftBar />}
         <div className="flex-1 bg-slate-200 relative">
           {isPreview ? (
             <Preview inputsList={inputsList} />

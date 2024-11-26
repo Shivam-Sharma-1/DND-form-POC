@@ -12,13 +12,12 @@ import { Input } from "@/components/UI/shadcn/input";
 import { Button } from "@/components/UI/shadcn/button";
 import MCQInputs from "./MCQInputs";
 
-const MainCard = ({
-  inputData,
-  setInputsList,
-}: {
+interface MainCardProps {
   inputData: TemplateProps;
   setInputsList: Dispatch<SetStateAction<TemplateProps[]>>;
-}) => {
+}
+
+const MainCard = ({ inputData, setInputsList }: MainCardProps) => {
   const {
     attributes,
     listeners,

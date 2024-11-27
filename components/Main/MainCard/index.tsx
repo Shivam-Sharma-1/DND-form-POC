@@ -4,13 +4,14 @@ import { InputType, TemplateProps } from "@/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import { Ellipsis, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { cn } from "@/utils/helpers/styles";
 import TextInputs from "./TextInputs";
 import { Label } from "@/components/UI/shadcn/label";
 import { Input } from "@/components/UI/shadcn/input";
 import { Button } from "@/components/UI/shadcn/button";
 import MCQInputs from "./MCQInputs";
+import { Icon } from "@iconify/react";
 
 interface MainCardProps {
   inputData: TemplateProps;
@@ -67,8 +68,9 @@ const MainCard = ({ inputData, setInputsList }: MainCardProps) => {
         className="absolute inset-0 cursor-move top-0 left-0 w-full h-6 flex justify-center items-center"
         ref={dragOverlayRef}
       >
-        <Ellipsis
-          size={22}
+        <Icon
+          icon="ph:dots-three-bold"
+          width={28}
           className="text-slate-400 hidden group-hover:block"
         />
       </div>
@@ -83,7 +85,7 @@ const MainCard = ({ inputData, setInputsList }: MainCardProps) => {
               className="p-0 h-fit text-destructive bg-transparent shadow-none hidden group-hover:block hover:bg-red-200 hover:text-destructive"
               onClick={handleDelete}
             >
-              <Trash2 size={14} />
+              <Icon icon="ph:trash" width={14} />
             </Button>
           </div>
           <Input

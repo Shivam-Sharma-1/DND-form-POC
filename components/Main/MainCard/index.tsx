@@ -4,7 +4,6 @@ import { InputType, TemplateProps } from "@/types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import { Trash2 } from "lucide-react";
 import { cn } from "@/utils/helpers/styles";
 import TextInputs from "./TextInputs";
 import { Label } from "@/components/UI/shadcn/label";

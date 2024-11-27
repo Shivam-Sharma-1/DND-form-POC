@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Button } from "@/components/UI/shadcn/button";
 import TextInputs from "./TextInputs";
 import MCQInputs from "./MCQInputs";
+import { Icon } from "@iconify/react";
 
 const CreateTempDialog = ({
   setTemplates,
@@ -87,7 +88,8 @@ const CreateTempDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="font-medium text-md py-6 mx-4">
+        <Button className="font-medium text-md py-6 mx-4 flex gap-2">
+          <Icon icon="ph:plus" width={16} />
           Create Template
         </Button>
       </DialogTrigger>

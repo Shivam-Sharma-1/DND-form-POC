@@ -1,7 +1,7 @@
 import { Button } from "@/components/UI/shadcn/button";
 import { Input } from "@/components/UI/shadcn/input";
 import { Label } from "@/components/UI/shadcn/label";
-import { PlusIcon } from "lucide-react";
+import { Icon } from "@iconify/react";
 import { Dispatch, SetStateAction } from "react";
 
 interface MCQInputsProps {
@@ -52,7 +52,7 @@ const MCQInputs = ({
         onClick={() => setOptionCount((prev) => prev + 1)}
         className="w-fit flex justify-center items-center gap-2 hover:bg-transparent h-fit p-0 mt-1"
       >
-        <PlusIcon size={16} />
+        <Icon icon="ph:plus" width={16} />
         Add Option
       </Button>
     </div>
